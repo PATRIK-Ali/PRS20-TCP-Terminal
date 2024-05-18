@@ -23,6 +23,18 @@ int main(int argc, char *argv[])
 
     TCP_Socket.setReadBufferSize(1000000);
 
+    // Search_Header_QArr.assign(0, Search_Header_Char[0]);
+    // Search_Header_QArr.assign(1, Search_Header_Char[1]);
+    // Search_Header_QArr.assign(2, Search_Header_Char[2]);
+    // Search_Header_QArr.assign(3, Search_Header_Char[3]);
+    //Search_Header_QArr.insert(0, &Search_Header_Char[0]);
+    Search_Header_QArr.assign(&Search_Header_Char[0], &Search_Header_Char[4]);
+    //Search_Footer_QArr.insert(0, &Search_Footer_Char[0]);
+    Search_Footer_QArr.assign(&Search_Footer_Char[0], &Search_Footer_Char[4]);
+    //memcpy(&Search_Header_QArr[0], &Search_Header_Char, 4);
+    Search_MaxLength = 50;
+    Search_TerminateChar = 0x12;
+
     w.show();
     return a.exec();
 }

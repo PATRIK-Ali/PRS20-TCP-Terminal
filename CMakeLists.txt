@@ -28,6 +28,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         AM_Common_Var_Const.h
         AM_TCP_Socket.cpp
         AM_TCP_Socket.h
+        searchsettings_dialog.h searchsettings_dialog.cpp searchsettings_dialog.ui
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET PRS20_V1-0 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

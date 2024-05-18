@@ -2,6 +2,9 @@
 #define AM_COMMON_VAR_CONST_H
 
 #include "mainwindow.h"
+#include "searchsettings_dialog.h"
+
+#include <QFile>
 
 #define TGT_NUM (10)
 
@@ -16,6 +19,19 @@ extern QString TCP_MSG_Buff_Qstr;
 extern char TCP_MSG_Buff_CharStr[1000000];
 extern QByteArray TCP_MSG_Buff_QArray;
 extern uint64_t TCP_MSG_Len;
+
+extern SearchSettings_Dialog *Dialog_P;
+
+extern QString Search_Header_Qstr;
+extern QByteArray Search_Header_QArr;
+extern uint8_t Search_Header_Char[];
+extern QString Search_Footer_Qstr;
+extern QByteArray Search_Footer_QArr;
+extern uint8_t Search_Footer_Char[];
+extern uint32_t Search_MaxLength;
+extern uint8_t Search_TerminateChar;
+
+extern QFile File;
 
 typedef struct {
     uint16_t Pulse_Number;
@@ -42,8 +58,10 @@ typedef union {
 typedef struct{
     uint32_t hdr;
     uint32_t pdw_num;
-    uint8_t pdw_byte[sizeof(PDW_t)];
+    // uint8_t pdw_byte[sizeof(PDW_t)];
+    PDW_t pdw;
     uint32_t checkSum;
+    uint32_t ftr;
 }field_snd_t;
 
 typedef union{

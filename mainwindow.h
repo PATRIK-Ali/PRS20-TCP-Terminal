@@ -24,12 +24,14 @@ public:
     void AM_Running_TCP_Disconnected(void);
     void AM_Running_TCP_Read(void);
     void AM_Running_TCP_Read_Finished(void);
+    void AM_Running_Search(QByteArray Source_Array);
 private slots:
     void on_IP_Edit_Obj_editingFinished();
     void on_Port_Edit_Obj_editingFinished();
     void on_ConButton_Obj_released();
     void on_DisConButton_Obj_released();
     void on_ClrScrButton_Obj_released();
+    void on_SearchButton_Obj_released();
 };
 
 #endif // MAINWINDOW_H

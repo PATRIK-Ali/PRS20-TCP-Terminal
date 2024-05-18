@@ -68,6 +68,8 @@ public:
     QPushButton *ClrScrButton_Obj;
     QTextBrowser *TextShow_Obj;
     QLabel *LatestFindLabel_Obj;
+    QTextBrowser *SearchBrowser_Obj;
+    QPushButton *SearchButton_Obj;
     QMenuBar *menubar;
     QStatusBar *statusbar_obj;
 
@@ -75,7 +77,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(933, 577);
+        MainWindow->resize(1284, 577);
         QFont font;
         font.setFamilies({QString::fromUtf8("Segoe UI")});
         font.setBold(true);
@@ -205,7 +207,7 @@ public:
         label_10->setGeometry(QRect(180, 140, 49, 16));
         RcvRawGroup_Obj = new QGroupBox(centralwidget);
         RcvRawGroup_Obj->setObjectName("RcvRawGroup_Obj");
-        RcvRawGroup_Obj->setGeometry(QRect(300, 10, 611, 521));
+        RcvRawGroup_Obj->setGeometry(QRect(300, 10, 961, 521));
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -217,16 +219,17 @@ public:
         RcvRawGroup_Obj->setCheckable(false);
         ClrScrButton_Obj = new QPushButton(RcvRawGroup_Obj);
         ClrScrButton_Obj->setObjectName("ClrScrButton_Obj");
-        ClrScrButton_Obj->setGeometry(QRect(10, 310, 80, 24));
+        ClrScrButton_Obj->setGeometry(QRect(10, 200, 80, 24));
         ClrScrButton_Obj->setAutoDefault(false);
         ClrScrButton_Obj->setFlat(false);
         TextShow_Obj = new QTextBrowser(RcvRawGroup_Obj);
         TextShow_Obj->setObjectName("TextShow_Obj");
-        TextShow_Obj->setGeometry(QRect(10, 30, 591, 271));
+        TextShow_Obj->setGeometry(QRect(10, 30, 941, 161));
         sizePolicy.setHeightForWidth(TextShow_Obj->sizePolicy().hasHeightForWidth());
         TextShow_Obj->setSizePolicy(sizePolicy);
         TextShow_Obj->setSizeIncrement(QSize(0, 0));
         TextShow_Obj->setBaseSize(QSize(0, 0));
+        TextShow_Obj->setAutoFillBackground(false);
         TextShow_Obj->setFrameShape(QFrame::StyledPanel);
         TextShow_Obj->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
         TextShow_Obj->setAutoFormatting(QTextEdit::AutoNone);
@@ -234,7 +237,14 @@ public:
         TextShow_Obj->setAcceptRichText(true);
         LatestFindLabel_Obj = new QLabel(RcvRawGroup_Obj);
         LatestFindLabel_Obj->setObjectName("LatestFindLabel_Obj");
-        LatestFindLabel_Obj->setGeometry(QRect(10, 350, 591, 16));
+        LatestFindLabel_Obj->setGeometry(QRect(10, 260, 591, 16));
+        SearchBrowser_Obj = new QTextBrowser(RcvRawGroup_Obj);
+        SearchBrowser_Obj->setObjectName("SearchBrowser_Obj");
+        SearchBrowser_Obj->setGeometry(QRect(10, 280, 941, 231));
+        SearchBrowser_Obj->setFont(font);
+        SearchButton_Obj = new QPushButton(RcvRawGroup_Obj);
+        SearchButton_Obj->setObjectName("SearchButton_Obj");
+        SearchButton_Obj->setGeometry(QRect(10, 230, 91, 24));
         MainWindow->setCentralWidget(centralwidget);
         RcvRawGroup_Obj->raise();
         ConnectionGroup_Obj->raise();
@@ -242,7 +252,7 @@ public:
         RxGroup_Obj->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 933, 21));
+        menubar->setGeometry(QRect(0, 0, 1284, 21));
         MainWindow->setMenuBar(menubar);
         statusbar_obj = new QStatusBar(MainWindow);
         statusbar_obj->setObjectName("statusbar_obj");
@@ -290,6 +300,7 @@ public:
         RcvRawGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Received Raw Data", nullptr));
         ClrScrButton_Obj->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         LatestFindLabel_Obj->setText(QCoreApplication::translate("MainWindow", "--->", nullptr));
+        SearchButton_Obj->setText(QCoreApplication::translate("MainWindow", "Search settings", nullptr));
     } // retranslateUi
 
 };

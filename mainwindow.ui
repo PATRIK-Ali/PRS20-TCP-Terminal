@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>933</width>
+    <width>1284</width>
     <height>577</height>
    </rect>
   </property>
@@ -502,7 +502,7 @@
      <rect>
       <x>300</x>
       <y>10</y>
-      <width>611</width>
+      <width>961</width>
       <height>521</height>
      </rect>
     </property>
@@ -537,7 +537,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>310</y>
+       <y>200</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -560,8 +560,8 @@
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>591</width>
-       <height>271</height>
+       <width>941</width>
+       <height>161</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -581,6 +581,9 @@
        <width>0</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -602,13 +605,45 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>350</y>
+       <y>260</y>
        <width>591</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
       <string>---&gt;</string>
+     </property>
+    </widget>
+    <widget class="QTextBrowser" name="SearchBrowser_Obj">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>280</y>
+       <width>941</width>
+       <height>231</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <italic>false</italic>
+       <bold>true</bold>
+       <underline>false</underline>
+       <strikeout>false</strikeout>
+      </font>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="SearchButton_Obj">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>230</y>
+       <width>91</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Search settings</string>
      </property>
     </widget>
    </widget>
@@ -622,7 +657,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>933</width>
+     <width>1284</width>
      <height>21</height>
     </rect>
    </property>
