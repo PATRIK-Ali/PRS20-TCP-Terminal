@@ -1,0 +1,9 @@
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/PRS20_V1-0.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/edit_cache.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/rebuild_cache.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/list_install_components.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/install.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/install/local.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/install/strip.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/PRS20_V1-0_autogen_timestamp_deps.dir
+C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/CMakeFiles/PRS20_V1-0_autogen.dir

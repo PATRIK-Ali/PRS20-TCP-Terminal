@@ -12,9 +12,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    // strcpy(IP_Remote_CharStr, "127.0.0.1");
-    // IP_Remote_stdStr.assign("127.0.0.1");
-    // IP_Remote_QStr.assign("127.0.0.1");
+
+    // strcpy(IP_Remote_CharStr, "192.168.1.10");
+    // IP_Remote_stdStr.assign("192.168.1.10");
+    // IP_Remote_QStr.assign("192.168.1.10");
+    // Port_Remote = 5001;
+
     //a.connect(&TCP_Socket, &QTcpSocket::QAbstractSocket::QIODevice::readyRead, &w, &MainWindow::AM_Running);
     a.connect(&TCP_Socket, &QTcpSocket::QAbstractSocket::connected, &w, &MainWindow::AM_Running_TCP_Connected);
     a.connect(&TCP_Socket, &QTcpSocket::QAbstractSocket::disconnected, &w, &MainWindow::AM_Running_TCP_Disconnected);

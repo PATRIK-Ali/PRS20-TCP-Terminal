@@ -1,0 +1,12 @@
+# ninja log v6
+12	769	7379784551921059	PRS20_V1-0_autogen/timestamp	1e28e58db3f493db
+12	769	7379784551921059	PRS20_V1-0_autogen/mocs_compilation.cpp	1e28e58db3f493db
+12	769	7379784551921059	C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/PRS20_V1-0_autogen/timestamp	1e28e58db3f493db
+12	769	7379784551921059	C:/Users/IRIAF-Jahad/Desktop/PRS20/PRS20_V1-0/build/Desktop_x86_windows_msys_pe_64bit-Release/PRS20_V1-0_autogen/mocs_compilation.cpp	1e28e58db3f493db
+776	4749	7379784552789742	CMakeFiles/PRS20_V1-0.dir/PRS20_V1-0_autogen/mocs_compilation.cpp.obj	460a5e149b1249e1
+780	4970	7379784552789742	CMakeFiles/PRS20_V1-0.dir/AM_Common_Var_Const.cpp.obj	459facc8779cdfba
+782	5125	7379784552789742	CMakeFiles/PRS20_V1-0.dir/searchsettings_dialog.cpp.obj	89486ed3e01c5397
+777	5357	7379784552789742	CMakeFiles/PRS20_V1-0.dir/main.cpp.obj	c2088b9d04c9d27e
+781	5466	7379784552789742	CMakeFiles/PRS20_V1-0.dir/AM_TCP_Socket.cpp.obj	5efa0bb3e70dea67
+778	5622	7379784552789742	CMakeFiles/PRS20_V1-0.dir/mainwindow.cpp.obj	8fdd47e42a452091
+5622	5809	7379784601259118	PRS20_V1-0.exe	cc20f96dece1bf70

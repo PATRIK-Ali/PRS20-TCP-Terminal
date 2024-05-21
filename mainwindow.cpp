@@ -8,6 +8,8 @@
 char tmp_CharStr[1000000];
 QString AAA;
 
+void Save_Data_To_CSV_File(eth_snd_t Data, QFile *File);
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -30,21 +32,28 @@ void MainWindow::AM_Running()
 void MainWindow::AM_Running_TCP_Connected()
 {
     char tmp_CharStr[200];
+    QDir Dir;
+    char Dir_CharStr[200];
+
     sprintf(tmp_CharStr, "Connected to %s on port %d .", IP_Remote_CharStr, Port_Remote);
     AM_TCP_Write_Data("PRS20 software connected.\r\n");
     ConStateLabel_Obj->setText("Connected");
     statusbar_obj->showMessage(tmp_CharStr, 0);
 
-    File.setFileName("TestFile.txt");
+    strncpy(tmp_CharStr, Dir.homePath().toLocal8Bit(), sizeof(tmp_CharStr));
+    sprintf(Dir_CharStr, "%s/Desktop/PRS20_Log_Report.csv", tmp_CharStr);
+    File.setFileName(Dir_CharStr);
     File.open(QFile::ReadWrite, QFile::ReadOwner|QFile::WriteOwner);
-    File.write("Salam\r\n");
-    File.close();
+    File.write(/*Header,Footer,CheckSum,*/"Nbr. of Targets,Target #,Pulse_Number,PW_Cnt_l,Pulse_Cnt,TOA,PW_Cnt_r,"
+               "Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6,Phase7,Phase8\r\n");
+    //File.close();
 }
 //--------------------------------------------------------
 void MainWindow::AM_Running_TCP_Disconnected()
 {
     ConStateLabel_Obj->setText("Disconnected");
     statusbar_obj->showMessage("Disconnected.", 0);
+    File.close();
 }
 //--------------------------------------------------------
 void MainWindow::AM_Running_TCP_Read(void)
@@ -75,7 +84,7 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
     char Sum_CharStr[200];
     char Parameters_CharStr[500];
     eth_snd_t ETH_SND;
-    PDW_t PDW1;
+    //PDW_t PDW1;
 
 
     memset(Found_Char, 0, sizeof(Found_Char));
@@ -143,6 +152,8 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
         sprintf(Parameters_CharStr, " ------------------------END------------------------\r\n\r\n");
         SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
+        Save_Data_To_CSV_File(ETH_SND, &File);
+
         Index_H = Source_Array.indexOf(Search_Header_QArr, Index_H+1);
         if(Index_H != (-1))
         {
@@ -157,22 +168,6 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
 
     }
 }
-
-// typedef struct {
-//     uint16_t Pulse_Number;
-//     uint16_t PW_Cnt_l;
-//     uint32_t Pulse_Cnt;
-//     uint32_t TOA;
-//     uint32_t PW_Cnt_r;
-// }Time_t;
-
-// typedef struct {
-//     //	u32 dummy; //to adjust BRAM read address -- 4B
-//     Time_t time; //16 Byte
-//     uint16_t Amp[8];	// 16 Byte
-//     uint16_t Phase[8]; //16 Byte
-//     uint32_t rsv[4];		//16B
-// }PE_t;
 //--------------------------------------------------------
 
 void MainWindow::on_IP_Edit_Obj_editingFinished()
@@ -193,6 +188,14 @@ void MainWindow::on_Port_Edit_Obj_editingFinished()
 
 void MainWindow::on_ConButton_Obj_released()
 {
+    if(strstr(IP_Edit_Obj->text().toLocal8Bit().data(), "Enter IP address") != 0)
+    {
+        strcpy(IP_Remote_CharStr, "192.168.1.10");
+        IP_Remote_stdStr.assign("192.168.1.10");
+        IP_Remote_QStr.assign("192.168.1.10");
+        Port_Remote = 5001;
+    }
+
     AM_TCP_Connect();
 }
 
@@ -223,5 +226,23 @@ void MainWindow::on_SearchButton_Obj_released()
     Dialog_P = &Dialog;
     //Dialog.show();
     Dialog_P->show();
+}
+
+void Save_Data_To_CSV_File(eth_snd_t Data, QFile *File)
+{
+    char Temp_CharStr[500];
+    uint8_t L = 0;
+
+    for(L=0; L<Data.field.pdw_num; L++)
+    {
+        sprintf(Temp_CharStr, /*%X,%X,%X,*/"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n"
+                /*, Data.field.hdr, Data.field.ftr, Data.field.checkSum*/, Data.field.pdw_num, L+1
+                , Data.field.pdw.PE[L].time.Pulse_Number, Data.field.pdw.PE[L].time.PW_Cnt_l, Data.field.pdw.PE[L].time.Pulse_Cnt, Data.field.pdw.PE[L].time.TOA, Data.field.pdw.PE[L].time.PW_Cnt_r
+                , Data.field.pdw.PE[L].Amp[0], Data.field.pdw.PE[L].Amp[1], Data.field.pdw.PE[L].Amp[2], Data.field.pdw.PE[L].Amp[3], Data.field.pdw.PE[L].Amp[4], Data.field.pdw.PE[L].Amp[5], Data.field.pdw.PE[L].Amp[6], Data.field.pdw.PE[L].Amp[7]
+                , Data.field.pdw.PE[L].Phase[0], Data.field.pdw.PE[L].Phase[1], Data.field.pdw.PE[L].Phase[2], Data.field.pdw.PE[L].Phase[3], Data.field.pdw.PE[L].Phase[4], Data.field.pdw.PE[L].Phase[5], Data.field.pdw.PE[L].Phase[6], Data.field.pdw.PE[L].Phase[7]);
+        File->write(Temp_CharStr);
+    }
+
+
 }
 
