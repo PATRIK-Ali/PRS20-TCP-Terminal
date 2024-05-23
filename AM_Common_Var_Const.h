@@ -6,6 +6,7 @@
 
 #include <QFile>
 #include <QDir>
+#include <QDateTime>
 
 #define TGT_NUM (10)
 
@@ -33,6 +34,8 @@ extern uint32_t Search_MaxLength;
 extern uint8_t Search_TerminateChar;
 
 extern QFile File;
+extern QDir Dir;
+extern QDateTime DateTime;
 
 typedef struct {
     uint16_t Pulse_Number;

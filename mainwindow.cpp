@@ -32,21 +32,28 @@ void MainWindow::AM_Running()
 void MainWindow::AM_Running_TCP_Connected()
 {
     char tmp_CharStr[200];
-    QDir Dir;
-    char Dir_CharStr[200];
+    QString tmp_QStr;
+    char DateTime_CharStr[100];
 
-    sprintf(tmp_CharStr, "Connected to %s on port %d .", IP_Remote_CharStr, Port_Remote);
+    sprintf(tmp_CharStr, "Connected to %s on port %d .\t", IP_Remote_CharStr, Port_Remote);
     AM_TCP_Write_Data("PRS20 software connected.\r\n");
     ConStateLabel_Obj->setText("Connected");
     statusbar_obj->showMessage(tmp_CharStr, 0);
 
     strncpy(tmp_CharStr, Dir.homePath().toLocal8Bit(), sizeof(tmp_CharStr));
-    sprintf(Dir_CharStr, "%s/Desktop/PRS20_Log_Report.csv", tmp_CharStr);
-    File.setFileName(Dir_CharStr);
+    sprintf(tmp_CharStr, "%s/Desktop/PRS20_Log_Report/", tmp_CharStr);
+    Dir.mkpath(tmp_CharStr);
+    strncpy(DateTime_CharStr, DateTime.currentDateTime().toString("yyyy.MM.dd-h.m.s").toLocal8Bit().data(), sizeof(DateTime_CharStr));
+    sprintf(tmp_CharStr, "%s%s.csv", tmp_CharStr, DateTime_CharStr);
+    tmp_QStr.assign(tmp_CharStr);
+    File.setFileName(tmp_QStr);
     File.open(QFile::ReadWrite, QFile::ReadOwner|QFile::WriteOwner);
     File.write(/*Header,Footer,CheckSum,*/"Nbr. of Targets,Target #,Pulse_Number,PW_Cnt_l,Pulse_Cnt,TOA,PW_Cnt_r,"
                "Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6,Phase7,Phase8\r\n");
     //File.close();
+    memset(tmp_CharStr, 0, sizeof(tmp_CharStr));
+    sprintf(tmp_CharStr, "%s Log will be saved in %s", statusbar_obj->currentMessage().toLocal8Bit().data(), File.filesystemFileName().u8string().data());
+    statusbar_obj->showMessage(tmp_CharStr, 0);
 }
 //--------------------------------------------------------
 void MainWindow::AM_Running_TCP_Disconnected()

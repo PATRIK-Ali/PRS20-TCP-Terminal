@@ -26,3 +26,5 @@ uint32_t Search_MaxLength = 0;
 uint8_t Search_TerminateChar = 0;
 
 QFile File;
+QDir Dir;
+QDateTime DateTime;
