@@ -36,7 +36,7 @@ extern uint8_t Search_TerminateChar;
 extern QFile File;
 extern QDir Dir;
 extern QDateTime DateTime;
-
+//--------------------------------------------------------
 typedef struct {
     uint16_t Pulse_Number;
     uint16_t PW_Cnt_l;
@@ -66,17 +66,14 @@ typedef struct{
     PDW_t pdw;
     uint32_t checkSum;
     uint32_t ftr;
-}field_snd_t;
+}field_rcv_t;
 
 typedef union{
-    field_snd_t field;
-    uint8_t byte[sizeof(field_snd_t)];
-}eth_snd_t;
-
-
-
-
-#define ETH_RCV_HDR (0xA5A5)
+    field_rcv_t field;
+    uint8_t byte[sizeof(field_rcv_t)];
+}rcv_packet_t;
+//--------------------------------------------------------
+#define ETH_SND_HDR (0xA5A5)
 
 #define ETH_CMD_TX1_EN (1)
 #define ETH_CMD_TX2_EN (2)
@@ -106,7 +103,7 @@ typedef union{
 #define ETH_CMD_RX3_DIS (38)
 #define ETH_CMD_RX4_DIS (39)
 
-#define ETH_RCV_FTR (0xAA55)
+#define ETH_SND_FTR (0xAA55)
 
 typedef struct{
     uint16_t hdr;
@@ -118,16 +115,15 @@ typedef struct{
     float freqTx;
     uint8_t x[2];
     uint32_t checkSum;
-    uint8_t ftr;
+    uint16_t ftr;
 }field_t;
 
 
 typedef union{
     field_t field;
     uint8_t byte[sizeof(field_t)];
-}eth_rcv_t;
-
-
-
+}snd_packet_t;
+//--------------------------------------------------------
+extern snd_packet_t SND_Packet;
 
 #endif // AM_COMMON_VAR_CONST_H

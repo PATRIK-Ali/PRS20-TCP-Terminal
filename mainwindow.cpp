@@ -8,7 +8,9 @@
 char tmp_CharStr[1000000];
 QString AAA;
 
-void Save_Data_To_CSV_File(eth_snd_t Data, QFile *File);
+void Save_Data_To_CSV_File(rcv_packet_t Data, QFile *File);
+void Send_Packet_CMD_Set(uint8_t CMD);
+void Send_Packet_Sender(snd_packet_t Data);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -90,7 +92,7 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
     uint64_t Sum = 0;
     char Sum_CharStr[200];
     char Parameters_CharStr[500];
-    eth_snd_t ETH_SND;
+    rcv_packet_t RCV_Packet;
     //PDW_t PDW1;
 
 
@@ -133,33 +135,33 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
         SearchBrowser_Obj->insertPlainText(Found_QArr.toHex());
         SearchBrowser_Obj->insertPlainText(&Sum_CharStr[0]);
 
-        memset(&ETH_SND.field, 0, sizeof(ETH_SND.field));
-        memcpy(&ETH_SND.field, &Found_QArr.data()[0], sizeof(ETH_SND.field));
-        sprintf(Parameters_CharStr, " Parameters:\r\n [HDR: %X]\t[FTR: %X]\t[CKSum: %X]\t[NO. Target: %d]\r\n",ETH_SND.field.hdr, ETH_SND.field.ftr, ETH_SND.field.checkSum, ETH_SND.field.pdw_num);
+        memset(&RCV_Packet.field, 0, sizeof(RCV_Packet.field));
+        memcpy(&RCV_Packet.field, &Found_QArr.data()[0], sizeof(RCV_Packet.field));
+        sprintf(Parameters_CharStr, " Parameters:\r\n [HDR: %X]\t[FTR: %X]\t[CKSum: %X]\t[NO. Target: %d]\r\n",RCV_Packet.field.hdr, RCV_Packet.field.ftr, RCV_Packet.field.checkSum, RCV_Packet.field.pdw_num);
         SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
-        for(L=0; L<ETH_SND.field.pdw_num; L++)
+        for(L=0; L<RCV_Packet.field.pdw_num; L++)
         {
             sprintf(Parameters_CharStr, "\r\n Target %d:\r\n", (L+1));
             SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
             sprintf(Parameters_CharStr, " [Pulse_Number: %X]\t[PW_Cnt_l: %X]\t[Pulse_Cnt: %X]\t[TOA: %X]\t[PW_Cnt_r: %X]\r\n",
-                    ETH_SND.field.pdw.PE[L].time.Pulse_Number, ETH_SND.field.pdw.PE[L].time.PW_Cnt_l, ETH_SND.field.pdw.PE[L].time.Pulse_Cnt, ETH_SND.field.pdw.PE[L].time.TOA, ETH_SND.field.pdw.PE[L].time.PW_Cnt_r);
+                    RCV_Packet.field.pdw.PE[L].time.Pulse_Number, RCV_Packet.field.pdw.PE[L].time.PW_Cnt_l, RCV_Packet.field.pdw.PE[L].time.Pulse_Cnt, RCV_Packet.field.pdw.PE[L].time.TOA, RCV_Packet.field.pdw.PE[L].time.PW_Cnt_r);
             SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
             sprintf(Parameters_CharStr, " [Amp1: %X]\t[Amp2: %X]\t[Amp3: %X]\t[Amp4: %X]\t[Amp5: %X]\t[Amp6: %X]\t[Amp7: %X]\t[Amp8: %X]\r\n",
-                    ETH_SND.field.pdw.PE[L].Amp[0], ETH_SND.field.pdw.PE[L].Amp[1], ETH_SND.field.pdw.PE[L].Amp[2], ETH_SND.field.pdw.PE[L].Amp[3], ETH_SND.field.pdw.PE[L].Amp[4], ETH_SND.field.pdw.PE[L].Amp[5], ETH_SND.field.pdw.PE[L].Amp[6], ETH_SND.field.pdw.PE[L].Amp[7]);
+                    RCV_Packet.field.pdw.PE[L].Amp[0], RCV_Packet.field.pdw.PE[L].Amp[1], RCV_Packet.field.pdw.PE[L].Amp[2], RCV_Packet.field.pdw.PE[L].Amp[3], RCV_Packet.field.pdw.PE[L].Amp[4], RCV_Packet.field.pdw.PE[L].Amp[5], RCV_Packet.field.pdw.PE[L].Amp[6], RCV_Packet.field.pdw.PE[L].Amp[7]);
             SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
             sprintf(Parameters_CharStr, " [Phase1: %X]\t[Phase2: %X]\t[Phase3: %X]\t[Phase4: %X]\t[Phase5: %X]\t[Phase6: %X]\t[Phase7: %X]\t[Phase8: %X]\r\n",
-                    ETH_SND.field.pdw.PE[L].Phase[0], ETH_SND.field.pdw.PE[L].Phase[1], ETH_SND.field.pdw.PE[L].Phase[2], ETH_SND.field.pdw.PE[L].Phase[3], ETH_SND.field.pdw.PE[L].Phase[4], ETH_SND.field.pdw.PE[L].Phase[5], ETH_SND.field.pdw.PE[L].Phase[6], ETH_SND.field.pdw.PE[L].Phase[7]);
+                    RCV_Packet.field.pdw.PE[L].Phase[0], RCV_Packet.field.pdw.PE[L].Phase[1], RCV_Packet.field.pdw.PE[L].Phase[2], RCV_Packet.field.pdw.PE[L].Phase[3], RCV_Packet.field.pdw.PE[L].Phase[4], RCV_Packet.field.pdw.PE[L].Phase[5], RCV_Packet.field.pdw.PE[L].Phase[6], RCV_Packet.field.pdw.PE[L].Phase[7]);
             SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
         }
 
         sprintf(Parameters_CharStr, " ------------------------END------------------------\r\n\r\n");
         SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
-        Save_Data_To_CSV_File(ETH_SND, &File);
+        Save_Data_To_CSV_File(RCV_Packet, &File);
 
         Index_H = Source_Array.indexOf(Search_Header_QArr, Index_H+1);
         if(Index_H != (-1))
@@ -176,7 +178,44 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
     }
 }
 //--------------------------------------------------------
+void Save_Data_To_CSV_File(rcv_packet_t Data, QFile *File)
+{
+    char Temp_CharStr[500];
+    uint8_t L = 0;
 
+    for(L=0; L<Data.field.pdw_num; L++)
+    {
+        sprintf(Temp_CharStr, /*%X,%X,%X,*/"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n"
+                /*, Data.field.hdr, Data.field.ftr, Data.field.checkSum*/, Data.field.pdw_num, L+1
+                , Data.field.pdw.PE[L].time.Pulse_Number, Data.field.pdw.PE[L].time.PW_Cnt_l, Data.field.pdw.PE[L].time.Pulse_Cnt, Data.field.pdw.PE[L].time.TOA, Data.field.pdw.PE[L].time.PW_Cnt_r
+                , Data.field.pdw.PE[L].Amp[0], Data.field.pdw.PE[L].Amp[1], Data.field.pdw.PE[L].Amp[2], Data.field.pdw.PE[L].Amp[3], Data.field.pdw.PE[L].Amp[4], Data.field.pdw.PE[L].Amp[5], Data.field.pdw.PE[L].Amp[6], Data.field.pdw.PE[L].Amp[7]
+                , Data.field.pdw.PE[L].Phase[0], Data.field.pdw.PE[L].Phase[1], Data.field.pdw.PE[L].Phase[2], Data.field.pdw.PE[L].Phase[3], Data.field.pdw.PE[L].Phase[4], Data.field.pdw.PE[L].Phase[5], Data.field.pdw.PE[L].Phase[6], Data.field.pdw.PE[L].Phase[7]);
+        File->write(Temp_CharStr);
+    }
+
+}
+//--------------------------------------------------------
+void Send_Packet_Sender(snd_packet_t Data)
+{
+    uint32_t L = 0;
+    uint8_t *Sum_P = (uint8_t*)&Data.field;
+    uint32_t Sum = 0;
+
+    Data.field.hdr = ETH_SND_HDR;
+    Data.field.checkSum = 0;
+    Data.field.ftr = 0;
+
+    for(L=0; L<sizeof(Data.field); L++)
+    {
+        Sum += Sum_P[L];
+    }
+
+    Data.field.checkSum = Sum;
+    Data.field.ftr = ETH_SND_FTR;
+
+    AM_TCP_Write_Data_Length(((char *)&Data), sizeof(Data));
+}
+//--------------------------------------------------------
 void MainWindow::on_IP_Edit_Obj_editingFinished()
 {
     IP_Remote_QStr = IP_Edit_Obj->text();
@@ -235,21 +274,148 @@ void MainWindow::on_SearchButton_Obj_released()
     Dialog_P->show();
 }
 
-void Save_Data_To_CSV_File(eth_snd_t Data, QFile *File)
+
+void MainWindow::on_Tx1CheckBox_Obj_stateChanged(int arg1)
 {
-    char Temp_CharStr[500];
-    uint8_t L = 0;
-
-    for(L=0; L<Data.field.pdw_num; L++)
-    {
-        sprintf(Temp_CharStr, /*%X,%X,%X,*/"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n"
-                /*, Data.field.hdr, Data.field.ftr, Data.field.checkSum*/, Data.field.pdw_num, L+1
-                , Data.field.pdw.PE[L].time.Pulse_Number, Data.field.pdw.PE[L].time.PW_Cnt_l, Data.field.pdw.PE[L].time.Pulse_Cnt, Data.field.pdw.PE[L].time.TOA, Data.field.pdw.PE[L].time.PW_Cnt_r
-                , Data.field.pdw.PE[L].Amp[0], Data.field.pdw.PE[L].Amp[1], Data.field.pdw.PE[L].Amp[2], Data.field.pdw.PE[L].Amp[3], Data.field.pdw.PE[L].Amp[4], Data.field.pdw.PE[L].Amp[5], Data.field.pdw.PE[L].Amp[6], Data.field.pdw.PE[L].Amp[7]
-                , Data.field.pdw.PE[L].Phase[0], Data.field.pdw.PE[L].Phase[1], Data.field.pdw.PE[L].Phase[2], Data.field.pdw.PE[L].Phase[3], Data.field.pdw.PE[L].Phase[4], Data.field.pdw.PE[L].Phase[5], Data.field.pdw.PE[L].Phase[6], Data.field.pdw.PE[L].Phase[7]);
-        File->write(Temp_CharStr);
-    }
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_TX1_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_TX1_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
 
 
+void MainWindow::on_Tx1AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_TX1_SET;
+    //SND_Packet.field.attn[0] = (uint8_t)atoi(Tx1AttnEdit_Obj->text().toLocal8Bit());
+    SND_Packet.field.attn[0] = Tx1AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx2CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_TX2_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_TX2_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx2AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_TX2_SET;
+    SND_Packet.field.attn[1] = Tx2AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx3CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_TX3_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_TX3_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx3AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_TX3_SET;
+    SND_Packet.field.attn[2] = Tx3AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx4CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_TX4_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_TX4_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Tx4AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_TX4_SET;
+    SND_Packet.field.attn[3] = Tx4AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx1CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_RX1_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_RX1_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx1AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_RX1_SET;
+    SND_Packet.field.gain[0] = Rx1AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx2CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_RX2_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_RX2_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx2AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_RX2_SET;
+    SND_Packet.field.gain[1] = Rx2AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx3CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_RX3_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_RX3_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx3AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_RX3_SET;
+    SND_Packet.field.gain[2] = Rx3AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx4CheckBox_Obj_stateChanged(int arg1)
+{
+    if(arg1 == 0) {SND_Packet.field.cmd = ETH_CMD_RX4_DIS;}
+    else {SND_Packet.field.cmd = ETH_CMD_RX4_EN;}
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_Rx4AttnEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_RX4_SET;
+    SND_Packet.field.gain[3] = Rx4AttnEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_TxL0FreqEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_TX_LO;
+    SND_Packet.field.freqTx = TxL0FreqEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_RxL0FreqEdit_Obj_editingFinished()
+{
+    SND_Packet.field.cmd = ETH_CMD_RX_LO;
+    SND_Packet.field.freqRx = RxL0FreqEdit_Obj->text().toUInt();
+    Send_Packet_Sender(SND_Packet);
 }
 

@@ -70,6 +70,14 @@ public:
     QLabel *LatestFindLabel_Obj;
     QTextBrowser *SearchBrowser_Obj;
     QPushButton *SearchButton_Obj;
+    QGroupBox *FreqGroup_Obj;
+    QLabel *label_11;
+    QLabel *label_12;
+    QLabel *label_13;
+    QLineEdit *TxL0FreqEdit_Obj;
+    QLineEdit *RxL0FreqEdit_Obj;
+    QLabel *label_14;
+    QLabel *label_15;
     QMenuBar *menubar;
     QStatusBar *statusbar_obj;
 
@@ -77,7 +85,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(1284, 577);
+        MainWindow->resize(1284, 707);
         QFont font;
         font.setFamilies({QString::fromUtf8("Segoe UI")});
         font.setBold(true);
@@ -207,7 +215,7 @@ public:
         label_10->setGeometry(QRect(180, 140, 49, 16));
         RcvRawGroup_Obj = new QGroupBox(centralwidget);
         RcvRawGroup_Obj->setObjectName("RcvRawGroup_Obj");
-        RcvRawGroup_Obj->setGeometry(QRect(300, 10, 961, 521));
+        RcvRawGroup_Obj->setGeometry(QRect(300, 10, 961, 641));
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -240,16 +248,41 @@ public:
         LatestFindLabel_Obj->setGeometry(QRect(10, 260, 591, 16));
         SearchBrowser_Obj = new QTextBrowser(RcvRawGroup_Obj);
         SearchBrowser_Obj->setObjectName("SearchBrowser_Obj");
-        SearchBrowser_Obj->setGeometry(QRect(10, 280, 941, 231));
+        SearchBrowser_Obj->setGeometry(QRect(10, 280, 941, 351));
         SearchBrowser_Obj->setFont(font);
         SearchButton_Obj = new QPushButton(RcvRawGroup_Obj);
         SearchButton_Obj->setObjectName("SearchButton_Obj");
         SearchButton_Obj->setGeometry(QRect(10, 230, 91, 24));
+        FreqGroup_Obj = new QGroupBox(centralwidget);
+        FreqGroup_Obj->setObjectName("FreqGroup_Obj");
+        FreqGroup_Obj->setGeometry(QRect(20, 540, 261, 111));
+        label_11 = new QLabel(FreqGroup_Obj);
+        label_11->setObjectName("label_11");
+        label_11->setGeometry(QRect(20, 20, 161, 16));
+        label_12 = new QLabel(FreqGroup_Obj);
+        label_12->setObjectName("label_12");
+        label_12->setGeometry(QRect(40, 50, 49, 16));
+        label_13 = new QLabel(FreqGroup_Obj);
+        label_13->setObjectName("label_13");
+        label_13->setGeometry(QRect(40, 80, 49, 16));
+        TxL0FreqEdit_Obj = new QLineEdit(FreqGroup_Obj);
+        TxL0FreqEdit_Obj->setObjectName("TxL0FreqEdit_Obj");
+        TxL0FreqEdit_Obj->setGeometry(QRect(90, 46, 113, 24));
+        RxL0FreqEdit_Obj = new QLineEdit(FreqGroup_Obj);
+        RxL0FreqEdit_Obj->setObjectName("RxL0FreqEdit_Obj");
+        RxL0FreqEdit_Obj->setGeometry(QRect(90, 76, 113, 24));
+        label_14 = new QLabel(FreqGroup_Obj);
+        label_14->setObjectName("label_14");
+        label_14->setGeometry(QRect(210, 50, 49, 16));
+        label_15 = new QLabel(FreqGroup_Obj);
+        label_15->setObjectName("label_15");
+        label_15->setGeometry(QRect(210, 80, 49, 16));
         MainWindow->setCentralWidget(centralwidget);
         RcvRawGroup_Obj->raise();
         ConnectionGroup_Obj->raise();
         TxGroup_Obj->raise();
         RxGroup_Obj->raise();
+        FreqGroup_Obj->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
         menubar->setGeometry(QRect(0, 0, 1284, 21));
@@ -301,6 +334,12 @@ public:
         ClrScrButton_Obj->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         LatestFindLabel_Obj->setText(QCoreApplication::translate("MainWindow", "--->", nullptr));
         SearchButton_Obj->setText(QCoreApplication::translate("MainWindow", "Search settings", nullptr));
+        FreqGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Frequency", nullptr));
+        label_11->setText(QCoreApplication::translate("MainWindow", "Tx and Rx Frequency values.", nullptr));
+        label_12->setText(QCoreApplication::translate("MainWindow", "Tx L0", nullptr));
+        label_13->setText(QCoreApplication::translate("MainWindow", "Rx L0", nullptr));
+        label_14->setText(QCoreApplication::translate("MainWindow", "MHz", nullptr));
+        label_15->setText(QCoreApplication::translate("MainWindow", "MHz", nullptr));
     } // retranslateUi
 
 };

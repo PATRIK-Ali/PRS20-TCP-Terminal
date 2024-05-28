@@ -20,6 +20,11 @@ void AM_TCP_Write_Data(char *DataToSend)
     TCP_Socket.write(DataToSend);
 }
 
+void AM_TCP_Write_Data_Length(char *DataToSend, uint64_t Len)
+{
+    TCP_Socket.write(DataToSend, Len);
+}
+
 void AM_TCP_Read_Data(void)
 {
     TCP_MSG_Len = TCP_Socket.bytesAvailable();

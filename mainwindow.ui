@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1284</width>
-    <height>577</height>
+    <height>707</height>
    </rect>
   </property>
   <property name="font">
@@ -503,7 +503,7 @@
       <x>300</x>
       <y>10</y>
       <width>961</width>
-      <height>521</height>
+      <height>641</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -620,7 +620,7 @@
        <x>10</x>
        <y>280</y>
        <width>941</width>
-       <height>231</height>
+       <height>351</height>
       </rect>
      </property>
      <property name="font">
@@ -647,10 +647,109 @@
      </property>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="FreqGroup_Obj">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>540</y>
+      <width>261</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Frequency</string>
+    </property>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Tx and Rx Frequency values.</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>50</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Tx L0</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>80</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Rx L0</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="TxL0FreqEdit_Obj">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>46</y>
+       <width>113</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="RxL0FreqEdit_Obj">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>76</y>
+       <width>113</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_14">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>50</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MHz</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_15">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>80</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MHz</string>
+     </property>
+    </widget>
+   </widget>
    <zorder>RcvRawGroup_Obj</zorder>
    <zorder>ConnectionGroup_Obj</zorder>
    <zorder>TxGroup_Obj</zorder>
    <zorder>RxGroup_Obj</zorder>
+   <zorder>FreqGroup_Obj</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

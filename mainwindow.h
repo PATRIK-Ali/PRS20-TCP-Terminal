@@ -32,6 +32,24 @@ private slots:
     void on_DisConButton_Obj_released();
     void on_ClrScrButton_Obj_released();
     void on_SearchButton_Obj_released();
+    void on_Tx1CheckBox_Obj_stateChanged(int arg1);
+    void on_Tx1AttnEdit_Obj_editingFinished();
+    void on_Tx2CheckBox_Obj_stateChanged(int arg1);
+    void on_Tx2AttnEdit_Obj_editingFinished();
+    void on_Tx3CheckBox_Obj_stateChanged(int arg1);
+    void on_Tx3AttnEdit_Obj_editingFinished();
+    void on_Tx4CheckBox_Obj_stateChanged(int arg1);
+    void on_Tx4AttnEdit_Obj_editingFinished();
+    void on_Rx1CheckBox_Obj_stateChanged(int arg1);
+    void on_Rx1AttnEdit_Obj_editingFinished();
+    void on_Rx2CheckBox_Obj_stateChanged(int arg1);
+    void on_Rx2AttnEdit_Obj_editingFinished();
+    void on_Rx3CheckBox_Obj_stateChanged(int arg1);
+    void on_Rx3AttnEdit_Obj_editingFinished();
+    void on_Rx4CheckBox_Obj_stateChanged(int arg1);
+    void on_Rx4AttnEdit_Obj_editingFinished();
+    void on_TxL0FreqEdit_Obj_editingFinished();
+    void on_RxL0FreqEdit_Obj_editingFinished();
 };
 
 #endif // MAINWINDOW_H
