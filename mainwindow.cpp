@@ -8,6 +8,7 @@
 char tmp_CharStr[1000000];
 QString AAA;
 
+void AM_File_Open_Close(QFile *File, char State);
 void Save_Data_To_CSV_File(rcv_packet_t Data, QFile *File);
 void Send_Packet_CMD_Set(uint8_t CMD);
 void Send_Packet_Sender(snd_packet_t Data);
@@ -42,27 +43,31 @@ void MainWindow::AM_Running_TCP_Connected()
     ConStateLabel_Obj->setText("Connected");
     statusbar_obj->showMessage(tmp_CharStr, 0);
 
-    strncpy(tmp_CharStr, Dir.homePath().toLocal8Bit(), sizeof(tmp_CharStr));
-    sprintf(tmp_CharStr, "%s/Desktop/PRS20_Log_Report/", tmp_CharStr);
-    Dir.mkpath(tmp_CharStr);
-    strncpy(DateTime_CharStr, DateTime.currentDateTime().toString("yyyy.MM.dd-h.m.s").toLocal8Bit().data(), sizeof(DateTime_CharStr));
-    sprintf(tmp_CharStr, "%s%s.csv", tmp_CharStr, DateTime_CharStr);
-    tmp_QStr.assign(tmp_CharStr);
-    File.setFileName(tmp_QStr);
-    File.open(QFile::ReadWrite, QFile::ReadOwner|QFile::WriteOwner);
-    File.write(/*Header,Footer,CheckSum,*/"Nbr. of Targets,Target #,Pulse_Number,PW_Cnt_l,Pulse_Cnt,TOA,PW_Cnt_r,"
-               "Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6,Phase7,Phase8\r\n");
-    //File.close();
-    memset(tmp_CharStr, 0, sizeof(tmp_CharStr));
-    sprintf(tmp_CharStr, "%s Log will be saved in %s", statusbar_obj->currentMessage().toLocal8Bit().data(), File.filesystemFileName().u8string().data());
-    statusbar_obj->showMessage(tmp_CharStr, 0);
+    // strncpy(tmp_CharStr, Dir.homePath().toLocal8Bit(), sizeof(tmp_CharStr));
+    // sprintf(tmp_CharStr, "%s/Desktop/PRS20_Log_Report/", tmp_CharStr);
+    // Dir.mkpath(tmp_CharStr);
+    // strncpy(DateTime_CharStr, DateTime.currentDateTime().toString("yyyy.MM.dd-h.m.s").toLocal8Bit().data(), sizeof(DateTime_CharStr));
+    // sprintf(tmp_CharStr, "%s%s.csv", tmp_CharStr, DateTime_CharStr);
+    // tmp_QStr.assign(tmp_CharStr);
+    // File.setFileName(tmp_QStr);
+    // File.open(QFile::ReadWrite, QFile::ReadOwner|QFile::WriteOwner);
+    // File.write(/*Header,Footer,CheckSum,*/"Nbr. of Targets,Target #,Pulse_Number,PW_Cnt_l,Pulse_Cnt,TOA,PW_Cnt_r,"
+    //            "Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6,Phase7,Phase8\r\n");
+    // //File.close();
+    // memset(tmp_CharStr, 0, sizeof(tmp_CharStr));
+    // sprintf(tmp_CharStr, "%s Log will be saved in %s", statusbar_obj->currentMessage().toLocal8Bit().data(), File.filesystemFileName().u8string().data());
+    // statusbar_obj->showMessage(tmp_CharStr, 0);
+
+    //AM_File_Open_Close(&File, 1);
 }
 //--------------------------------------------------------
 void MainWindow::AM_Running_TCP_Disconnected()
 {
     ConStateLabel_Obj->setText("Disconnected");
     statusbar_obj->showMessage("Disconnected.", 0);
-    File.close();
+    //File.close();
+    AM_File_Open_Close(&File, 0);
+    Recording = 0; RecordButton_Obj->text().assign("Start recording");
 }
 //--------------------------------------------------------
 void MainWindow::AM_Running_TCP_Read(void)
@@ -161,7 +166,20 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
         sprintf(Parameters_CharStr, " ------------------------END------------------------\r\n\r\n");
         SearchBrowser_Obj->insertPlainText(&Parameters_CharStr[0]);
 
-        Save_Data_To_CSV_File(RCV_Packet, &File);
+        if( (Recording == 1) && (Records_Num_Counter < Records_Num_ToSave_Max) )
+        {
+            Save_Data_To_CSV_File(RCV_Packet, &File);
+            Records_Num_Counter++;
+            RecordingProgressBar_Obj->setValue((Records_Num_Counter*100)/Records_Num_ToSave_Max);
+
+            if(Records_Num_Counter == Records_Num_ToSave_Max)
+            {
+                RecordingProgressBar_Obj->setValue(100);
+                Recording = 0;
+                RecordButton_Obj->text().assign("Start recording");
+                AM_File_Open_Close(&File, 0);
+            }
+        }
 
         Index_H = Source_Array.indexOf(Search_Header_QArr, Index_H+1);
         if(Index_H != (-1))
@@ -175,6 +193,34 @@ void MainWindow::AM_Running_Search(QByteArray Source_Array)
             }
         }
 
+    }
+}
+//--------------------------------------------------------
+void AM_File_Open_Close(QFile *File, char State)
+{
+    char tmp_CharStr[200];
+    QString tmp_QStr;
+    char DateTime_CharStr[100];
+
+    if(State != 0)
+    {
+        strncpy(tmp_CharStr, Dir.homePath().toLocal8Bit(), sizeof(tmp_CharStr));
+        sprintf(tmp_CharStr, "%s/Desktop/PRS20_Log_Report/", tmp_CharStr);
+        Dir.mkpath(tmp_CharStr);
+        strncpy(DateTime_CharStr, DateTime.currentDateTime().toString("yyyy.MM.dd-h.m.s").toLocal8Bit().data(), sizeof(DateTime_CharStr));
+        sprintf(tmp_CharStr, "%s%s.csv", tmp_CharStr, DateTime_CharStr);
+        tmp_QStr.assign(tmp_CharStr);
+        File->setFileName(tmp_QStr);
+        File->open(QFile::ReadWrite, QFile::ReadOwner|QFile::WriteOwner);
+        File->write(/*Header,Footer,CheckSum,*/"Nbr. of Targets,Target #,Pulse_Number,PW_Cnt_l,Pulse_Cnt,TOA,PW_Cnt_r,"
+                                               "Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Phase1,Phase2,Phase3,Phase4,Phase5,Phase6,Phase7,Phase8\r\n");
+        // memset(tmp_CharStr, 0, sizeof(tmp_CharStr));
+        // sprintf(tmp_CharStr, "%s Log will be saved in %s", statusbar_obj->currentMessage().toLocal8Bit().data(), File.filesystemFileName().u8string().data());
+        // statusbar_obj->showMessage(tmp_CharStr, 0);
+    }
+    else if(State == 0)
+    {
+        File->close();
     }
 }
 //--------------------------------------------------------
@@ -234,7 +280,7 @@ void MainWindow::on_Port_Edit_Obj_editingFinished()
 
 void MainWindow::on_ConButton_Obj_released()
 {
-    if(strstr(IP_Edit_Obj->text().toLocal8Bit().data(), "Enter IP address") != 0)
+    if( (strstr(IP_Edit_Obj->text().toLocal8Bit().data(), "192.168.1.10") != 0) && (strstr(Port_Edit_Obj->text().toLocal8Bit().data(), "5001") != 0) )
     {
         strcpy(IP_Remote_CharStr, "192.168.1.10");
         IP_Remote_stdStr.assign("192.168.1.10");
@@ -407,7 +453,7 @@ void MainWindow::on_Rx4AttnEdit_Obj_editingFinished()
 void MainWindow::on_TxL0FreqEdit_Obj_editingFinished()
 {
     SND_Packet.field.cmd = ETH_CMD_TX_LO;
-    SND_Packet.field.freqTx = TxL0FreqEdit_Obj->text().toUInt();
+    SND_Packet.field.freqTx = TxL0FreqEdit_Obj->text().toFloat();
     Send_Packet_Sender(SND_Packet);
 }
 
@@ -415,7 +461,21 @@ void MainWindow::on_TxL0FreqEdit_Obj_editingFinished()
 void MainWindow::on_RxL0FreqEdit_Obj_editingFinished()
 {
     SND_Packet.field.cmd = ETH_CMD_RX_LO;
-    SND_Packet.field.freqRx = RxL0FreqEdit_Obj->text().toUInt();
+    SND_Packet.field.freqRx = RxL0FreqEdit_Obj->text().toFloat();
     Send_Packet_Sender(SND_Packet);
+}
+
+
+void MainWindow::on_RecordsNumEdit_Obj_editingFinished()
+{
+    Records_Num_ToSave_Max = RecordsNumEdit_Obj->text().toUInt();
+}
+
+
+void MainWindow::on_RecordButton_Obj_released()
+{
+    Records_Num_Counter = 0;
+    if(Recording == 0) {AM_File_Open_Close(&File, 1); Recording = 1; RecordButton_Obj->text().assign("Stop recording");}
+    else if(Recording == 1) {AM_File_Open_Close(&File, 0); Recording = 0; RecordButton_Obj->text().assign("Start recording");}
 }
 

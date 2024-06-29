@@ -25,6 +25,9 @@ uint8_t Search_Footer_Char[5] = {0xAA, 0x55, 0xAA, 0x55, 0x00};
 uint32_t Search_MaxLength = 0;
 uint8_t Search_TerminateChar = 0;
 
+uint32_t Records_Num_ToSave_Max = 5000;
+uint32_t Records_Num_Counter = 0;
+uint8_t Recording = 0;
 QFile File;
 QDir Dir;
 QDateTime DateTime;

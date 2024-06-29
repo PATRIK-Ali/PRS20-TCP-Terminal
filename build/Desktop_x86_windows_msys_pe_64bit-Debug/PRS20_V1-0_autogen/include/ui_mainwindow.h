@@ -17,6 +17,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
@@ -67,9 +68,12 @@ public:
     QGroupBox *RcvRawGroup_Obj;
     QPushButton *ClrScrButton_Obj;
     QTextBrowser *TextShow_Obj;
-    QLabel *LatestFindLabel_Obj;
     QTextBrowser *SearchBrowser_Obj;
     QPushButton *SearchButton_Obj;
+    QProgressBar *RecordingProgressBar_Obj;
+    QPushButton *RecordButton_Obj;
+    QLineEdit *RecordsNumEdit_Obj;
+    QLabel *label_16;
     QGroupBox *FreqGroup_Obj;
     QLabel *label_11;
     QLabel *label_12;
@@ -85,6 +89,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
+        MainWindow->setWindowModality(Qt::NonModal);
         MainWindow->resize(1284, 707);
         QFont font;
         font.setFamilies({QString::fromUtf8("Segoe UI")});
@@ -157,16 +162,16 @@ public:
         label->setGeometry(QRect(20, 20, 231, 16));
         label_2 = new QLabel(TxGroup_Obj);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(180, 50, 49, 16));
+        label_2->setGeometry(QRect(180, 50, 61, 16));
         label_3 = new QLabel(TxGroup_Obj);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(180, 80, 49, 16));
+        label_3->setGeometry(QRect(180, 80, 61, 16));
         label_4 = new QLabel(TxGroup_Obj);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(180, 110, 49, 16));
+        label_4->setGeometry(QRect(180, 110, 61, 16));
         label_5 = new QLabel(TxGroup_Obj);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(180, 140, 49, 16));
+        label_5->setGeometry(QRect(180, 140, 61, 16));
         RxGroup_Obj = new QGroupBox(centralwidget);
         RxGroup_Obj->setObjectName("RxGroup_Obj");
         RxGroup_Obj->setGeometry(QRect(20, 360, 261, 171));
@@ -203,16 +208,16 @@ public:
         label_6->setGeometry(QRect(20, 20, 231, 16));
         label_7 = new QLabel(RxGroup_Obj);
         label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(180, 50, 49, 16));
+        label_7->setGeometry(QRect(180, 50, 61, 16));
         label_8 = new QLabel(RxGroup_Obj);
         label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(180, 80, 49, 16));
+        label_8->setGeometry(QRect(180, 80, 61, 16));
         label_9 = new QLabel(RxGroup_Obj);
         label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(180, 110, 49, 16));
+        label_9->setGeometry(QRect(180, 110, 61, 16));
         label_10 = new QLabel(RxGroup_Obj);
         label_10->setObjectName("label_10");
-        label_10->setGeometry(QRect(180, 140, 49, 16));
+        label_10->setGeometry(QRect(180, 140, 61, 16));
         RcvRawGroup_Obj = new QGroupBox(centralwidget);
         RcvRawGroup_Obj->setObjectName("RcvRawGroup_Obj");
         RcvRawGroup_Obj->setGeometry(QRect(300, 10, 961, 641));
@@ -243,16 +248,30 @@ public:
         TextShow_Obj->setAutoFormatting(QTextEdit::AutoNone);
         TextShow_Obj->setReadOnly(true);
         TextShow_Obj->setAcceptRichText(true);
-        LatestFindLabel_Obj = new QLabel(RcvRawGroup_Obj);
-        LatestFindLabel_Obj->setObjectName("LatestFindLabel_Obj");
-        LatestFindLabel_Obj->setGeometry(QRect(10, 260, 591, 16));
         SearchBrowser_Obj = new QTextBrowser(RcvRawGroup_Obj);
         SearchBrowser_Obj->setObjectName("SearchBrowser_Obj");
-        SearchBrowser_Obj->setGeometry(QRect(10, 280, 941, 351));
+        SearchBrowser_Obj->setGeometry(QRect(10, 290, 941, 341));
         SearchBrowser_Obj->setFont(font);
         SearchButton_Obj = new QPushButton(RcvRawGroup_Obj);
         SearchButton_Obj->setObjectName("SearchButton_Obj");
-        SearchButton_Obj->setGeometry(QRect(10, 230, 91, 24));
+        SearchButton_Obj->setGeometry(QRect(10, 230, 101, 24));
+        RecordingProgressBar_Obj = new QProgressBar(RcvRawGroup_Obj);
+        RecordingProgressBar_Obj->setObjectName("RecordingProgressBar_Obj");
+        RecordingProgressBar_Obj->setGeometry(QRect(270, 263, 221, 16));
+        RecordingProgressBar_Obj->setValue(0);
+        RecordingProgressBar_Obj->setTextVisible(true);
+        RecordingProgressBar_Obj->setOrientation(Qt::Horizontal);
+        RecordingProgressBar_Obj->setInvertedAppearance(false);
+        RecordingProgressBar_Obj->setTextDirection(QProgressBar::TopToBottom);
+        RecordButton_Obj = new QPushButton(RcvRawGroup_Obj);
+        RecordButton_Obj->setObjectName("RecordButton_Obj");
+        RecordButton_Obj->setGeometry(QRect(10, 260, 101, 24));
+        RecordsNumEdit_Obj = new QLineEdit(RcvRawGroup_Obj);
+        RecordsNumEdit_Obj->setObjectName("RecordsNumEdit_Obj");
+        RecordsNumEdit_Obj->setGeometry(QRect(200, 261, 61, 21));
+        label_16 = new QLabel(RcvRawGroup_Obj);
+        label_16->setObjectName("label_16");
+        label_16->setGeometry(QRect(125, 263, 71, 16));
         FreqGroup_Obj = new QGroupBox(centralwidget);
         FreqGroup_Obj->setObjectName("FreqGroup_Obj");
         FreqGroup_Obj->setGeometry(QRect(20, 540, 261, 111));
@@ -305,8 +324,8 @@ public:
         ConnectionGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Connection", nullptr));
         IP_Label_Obj->setText(QCoreApplication::translate("MainWindow", "IP:", nullptr));
         Port_Label_Obj->setText(QCoreApplication::translate("MainWindow", "Port:", nullptr));
-        IP_Edit_Obj->setText(QCoreApplication::translate("MainWindow", "Enter IP address", nullptr));
-        Port_Edit_Obj->setText(QCoreApplication::translate("MainWindow", "Enter port", nullptr));
+        IP_Edit_Obj->setText(QCoreApplication::translate("MainWindow", "192.168.1.10", nullptr));
+        Port_Edit_Obj->setText(QCoreApplication::translate("MainWindow", "5001", nullptr));
         ConButton_Obj->setText(QCoreApplication::translate("MainWindow", "Connect", nullptr));
         DisConButton_Obj->setText(QCoreApplication::translate("MainWindow", "Disconnect", nullptr));
         ConStateLabel_Obj->setText(QCoreApplication::translate("MainWindow", "Disconnected", nullptr));
@@ -316,24 +335,26 @@ public:
         Tx3CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Tx 3", nullptr));
         Tx4CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Tx 4", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Tx activation and attenuation settings.", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_5->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
         RxGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Rx", nullptr));
         Rx1CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Rx 1", nullptr));
         Rx2CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Rx 2", nullptr));
         Rx3CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Rx 3", nullptr));
         Rx4CheckBox_Obj->setText(QCoreApplication::translate("MainWindow", "Rx 4", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Rx activation and gain settings.", nullptr));
-        label_7->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_8->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_9->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
-        label_10->setText(QCoreApplication::translate("MainWindow", "dB", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "dB (0-255)", nullptr));
         RcvRawGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Received Raw Data", nullptr));
         ClrScrButton_Obj->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
-        LatestFindLabel_Obj->setText(QCoreApplication::translate("MainWindow", "--->", nullptr));
         SearchButton_Obj->setText(QCoreApplication::translate("MainWindow", "Search settings", nullptr));
+        RecordButton_Obj->setText(QCoreApplication::translate("MainWindow", "Start recording", nullptr));
+        RecordsNumEdit_Obj->setText(QCoreApplication::translate("MainWindow", "5000", nullptr));
+        label_16->setText(QCoreApplication::translate("MainWindow", "No. Records:", nullptr));
         FreqGroup_Obj->setTitle(QCoreApplication::translate("MainWindow", "Frequency", nullptr));
         label_11->setText(QCoreApplication::translate("MainWindow", "Tx and Rx Frequency values.", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "Tx L0", nullptr));

@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -77,7 +80,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Enter IP address</string>
+      <string>192.168.1.10</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="Port_Edit_Obj">
@@ -90,7 +93,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Enter port</string>
+      <string>5001</string>
      </property>
     </widget>
     <widget class="QPushButton" name="ConButton_Obj">
@@ -267,12 +270,12 @@
       <rect>
        <x>180</x>
        <y>50</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -280,12 +283,12 @@
       <rect>
        <x>180</x>
        <y>80</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -293,12 +296,12 @@
       <rect>
        <x>180</x>
        <y>110</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
@@ -306,12 +309,12 @@
       <rect>
        <x>180</x>
        <y>140</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
    </widget>
@@ -449,12 +452,12 @@
       <rect>
        <x>180</x>
        <y>50</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -462,12 +465,12 @@
       <rect>
        <x>180</x>
        <y>80</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_9">
@@ -475,12 +478,12 @@
       <rect>
        <x>180</x>
        <y>110</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_10">
@@ -488,12 +491,12 @@
       <rect>
        <x>180</x>
        <y>140</y>
-       <width>49</width>
+       <width>61</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>dB</string>
+      <string>dB (0-255)</string>
      </property>
     </widget>
    </widget>
@@ -601,26 +604,13 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="LatestFindLabel_Obj">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>260</y>
-       <width>591</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>---&gt;</string>
-     </property>
-    </widget>
     <widget class="QTextBrowser" name="SearchBrowser_Obj">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>280</y>
+       <y>290</y>
        <width>941</width>
-       <height>351</height>
+       <height>341</height>
       </rect>
      </property>
      <property name="font">
@@ -638,12 +628,76 @@
       <rect>
        <x>10</x>
        <y>230</y>
-       <width>91</width>
+       <width>101</width>
        <height>24</height>
       </rect>
      </property>
      <property name="text">
       <string>Search settings</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="RecordingProgressBar_Obj">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>263</y>
+       <width>221</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="RecordButton_Obj">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>260</y>
+       <width>101</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Start recording</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="RecordsNumEdit_Obj">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>261</y>
+       <width>61</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>5000</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>125</x>
+       <y>263</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No. Records:</string>
      </property>
     </widget>
    </widget>

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     a.connect(&TCP_Socket, &QTcpSocket::QAbstractSocket::QIODevice::readyRead, &w, &MainWindow::AM_Running_TCP_Read);
     a.connect(&TCP_Socket, &QTcpSocket::QAbstractSocket::QIODevice::readChannelFinished, &w, &MainWindow::AM_Running_TCP_Read_Finished);
 
-    TCP_Socket.setReadBufferSize(1000000);
+    //TCP_Socket.setReadBufferSize(1000000);
 
     // Search_Header_QArr.assign(0, Search_Header_Char[0]);
     // Search_Header_QArr.assign(1, Search_Header_Char[1]);

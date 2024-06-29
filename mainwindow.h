@@ -50,6 +50,8 @@ private slots:
     void on_Rx4AttnEdit_Obj_editingFinished();
     void on_TxL0FreqEdit_Obj_editingFinished();
     void on_RxL0FreqEdit_Obj_editingFinished();
+    void on_RecordsNumEdit_Obj_editingFinished();
+    void on_RecordButton_Obj_released();
 };
 
 #endif // MAINWINDOW_H

@@ -33,6 +33,9 @@ extern uint8_t Search_Footer_Char[];
 extern uint32_t Search_MaxLength;
 extern uint8_t Search_TerminateChar;
 
+extern uint32_t Records_Num_ToSave_Max;
+extern uint32_t Records_Num_Counter;
+extern uint8_t Recording;
 extern QFile File;
 extern QDir Dir;
 extern QDateTime DateTime;
